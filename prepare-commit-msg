@@ -1,0 +1,12 @@
+#! /bin/bash
+
+function whatthecommit() {
+  curl --silent --fail https://whatthecommit.com/index.txt
+}
+
+commit_msg=$(whatthecommit)
+
+# Check if the commit message is not empty
+if [ -n "$commit_msg" ]; then
+  echo "$commit_msg" > "$1"
+fi

@@ -1,2 +1,4 @@
-# whatthecommit-prepare-commit-msg
-prepare-commit-msg hook generated using whatthecommit
+# Prepare Commit Message Git Hook Using What The Commit
+
+### Usage
+Copy `prepare-commit-msg` to `.git/hooks/`
