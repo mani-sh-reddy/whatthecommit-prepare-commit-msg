@@ -1,12 +1,14 @@
-#! /bin/bash
+#!/bin/bash
 
 function whatthecommit() {
-  curl --silent --fail https://whatthecommit.com/index.txt
+  curl --silent --fail --max-time 3 https://whatthecommit.com/index.txt
 }
 
 commit_msg=$(whatthecommit)
 
-# Check if the commit message is not empty
-if [ -n "$commit_msg" ]; then
-  echo "$commit_msg" > "$1"
+# Fallback to default if empty or failed
+if [ -z "$commit_msg" ]; then
+  commit_msg="what-the-commit timeout :("
 fi
+
+echo "$commit_msg" > "$1"
