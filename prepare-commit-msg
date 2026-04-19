@@ -11,4 +11,14 @@ if [ -z "$commit_msg" ]; then
   commit_msg="what-the-commit timeout :("
 fi
 
-echo "$commit_msg" > "$1"
+# Build file change summary
+added=$(git diff --cached --name-only --diff-filter=A | sed 's/^/  + /')
+modified=$(git diff --cached --name-only --diff-filter=M | sed 's/^/  ~ /')
+deleted=$(git diff --cached --name-only --diff-filter=D | sed 's/^/  - /')
+
+file_summary=""
+[ -n "$added" ]    && file_summary+=$'\n\nAdded:\n'"$added"
+[ -n "$modified" ] && file_summary+=$'\n\nModified:\n'"$modified"
+[ -n "$deleted" ]  && file_summary+=$'\n\nDeleted:\n'"$deleted"
+
+echo "${commit_msg}${file_summary}" > "$1"
